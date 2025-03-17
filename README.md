@@ -1,46 +1,154 @@
-# Getting Started with Create React App
+# Decentralized Freelance Marketplace
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Overview
 
-## Available Scripts
+A decentralized freelance marketplace built on the Cardano blockchain, enabling secure and transparent job agreements through smart contracts. Freelancers can create profiles, and clients can hire them, with payments locked in a smart contract and released based on milestone approvals. Authentication is handled via Cardano wallet integration, ensuring trustless transactions without intermediaries.
 
-In the project directory, you can run:
+## **Table of Contents**
+- [Tech Stack](#tech-stack)
+- [Features](#key-features)
+- [Setup Guide](#setup-guide)
+  - [Prerequisites](#prerequisites)
+  - [Backend (FastAPI with Poetry)](#backend-fastapi-with-poetry)
+  - [Frontend (React with TypeScript)](#frontend-react-with-typescript)
+  - [Smart Contracts (Aiken)](#smart-contracts-aiken)
+- [API Documentation](#api-documentation)
+- [Useful Links](#useful-links)
+- [License](#license)
 
-### `npm start`
+## **Tech Stack**
+- **Frontend:** React + TypeScript
+- **Backend:** FastAPI (using Poetry for dependency management)
+- **On-Chain Logic:** Aiken (for smart contracts)
+- **Wallet Integration:** MeshJS (Eternl, Nami, Flint, Gero, Lace)
+- **Blockchain APIs:** Blockfrost / Koios or Own Node - TBD
+- **Database:** Decentralized BD or centralized BD - TBD
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Key Features
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 1. User Profiles & Listings
 
-### `npm test`
+- Freelancers create profiles with skills, experience, and pricing.
+- Clients browse profiles and initiate contact.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. Project Agreements & Milestone-based Payments
 
-### `npm run build`
+- Clients and freelancers agree on project guidelines.
+- They define **milestone-based payments**, which act as benchmarks for progress.
+- Payments are locked in a smart contract and released when both parties confirm milestone completion.
+- Upon project completion, the remaining balance is released to the freelancer.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 3. Dispute Resolution
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- If disagreements occur, funds remain locked until an arbitrator intervenes.
+- Dispute resolution can be handled via a decentralized governance mechanism.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 4. Authentication
 
-### `npm run eject`
+- Users authenticate using a MeshJS Cardano wallet connector.
+- It has compatibility with :
+  - **Eternl** ([eternl.io](https://eternl.io))
+  - **Nami** ([namiwallet.io](https://namiwallet.io))
+  - **Flint** ([flintwallet.io](https://flintwallet.io))
+  - **Gero** ([gerowallet.io](https://gerowallet.io))
+  - **Lace** ([lace.io](https://www.lace.io))
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 5. Smart Contract Functionality (Using Aiken)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Locking Funds:** When a project starts, the agreed amount is locked in a smart contract.
+- **Releasing Payments:** Payments are released upon mutual approval at each milestone.
+- **Final Payout:** Upon project completion, the final amount is transferred to the freelancer.
+- **Dispute Handling:** If no agreement is reached, arbitration can be triggered.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 6. Deployment & Infrastructure
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- **Frontend Hosting:** TBD
+- **Backend Hosting:** TBD
+- **Smart Contracts:** Deployed on Cardano Testnet → Mainnet
 
-## Learn More
+## **Setup Guide**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### **Prerequisites**
+Ensure you have the following installed:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+# Install Node.js & npm
+sudo apt update && sudo apt install nodejs npm -y
+
+# Install Python 3 & Poetry
+sudo apt install python3 python3-pip -y
+curl -sSL https://install.python-poetry.org | python3 -
+
+# Install Git
+sudo apt install git -y
+```
+
+### **Backend (FastAPI with Poetry)**
+
+```sh
+# Clone the repository
+git clone https://github.com/yourusername/cardano-marketplace.git
+cd cardano-marketplace/backend
+
+# Install dependencies
+poetry install
+
+# Run the FastAPI server
+poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+### **Frontend (React with TypeScript)**
+
+```sh
+cd ../frontend
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+### **Smart Contracts (Aiken)**
+
+```sh
+# Install Aiken
+curl --proto '=https' --tlsv1.2 -LsSf https://install.aiken-lang.org | sh
+
+# Install aiken to PATH by following terminal instructions
+
+# Verify installation
+aiken --version
+
+# Initialize the Aiken project
+cd ../smart-contracts
+aiken new marketplace-contract
+cd marketplace-contract
+
+# Build the contract
+aiken build
+
+# Run tests
+aiken check
+```
+
+---
+
+## **API Documentation**
+Once the backend is running, access the **FastAPI interactive docs** at:
+- Swagger UI: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- ReDoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+
+---
+
+## **Useful Links**
+- **Aiken Documentation:** [https://aiken-lang.org](https://aiken-lang.org)
+- **FastAPI Documentation:** [https://fastapi.tiangolo.com](https://fastapi.tiangolo.com)
+- **React Documentation:** [https://react.dev](https://react.dev)
+- **MeshJS Wallet Integration:** [https://meshjs.dev](https://meshjs.dev)
+- **Blockfrost API:** [https://blockfrost.io](https://blockfrost.io)
+
+---
+
+## **License**
+This project is licensed under the MIT License.
