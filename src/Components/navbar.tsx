@@ -2,7 +2,7 @@ import React from 'react';
 
 const Navbar = () => {
   return (
-    <nav className="text-white shadow-md py-4">
+    <nav className="text-white border-b border-gray-600 py-4">
       <div className="container mx-auto flex justify-between items-center px-4">
         
         {/* Logo or Brand */}
