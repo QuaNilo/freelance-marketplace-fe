@@ -7,7 +7,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="text-white border-b border-gray-600 py-4 bg-black">
+      <nav className="text-white border-b border-gray-600 py-4">
         <div className="grid grid-cols-3 items-center px-4 gap-4 w-full">
           {/* Left links */}
           <div className="flex space-x-6 col-span-1">
