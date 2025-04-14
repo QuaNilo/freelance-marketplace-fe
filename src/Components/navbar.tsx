@@ -192,9 +192,33 @@ const Navbar = () => {
             <button onClick={toggleMenu} className="text-gray-400 hover:text-white text-2xl">&times;</button>
           </div>
           <ul className="space-y-4">
-            <li><button className="w-full text-left hover:text-gray-400">MetaMask</button></li>
-            <li><button className="w-full text-left hover:text-gray-400">WalletConnect</button></li>
-            <li><button className="w-full text-left hover:text-gray-400">Coinbase Wallet</button></li>
+            <li>
+              <button className="flex items-center justify-between w-full text-left hover:text-gray-400">
+                <div className="flex items-center space-x-2">
+                  <img className="w-16" src="/imgs/lace_logo.png" alt="Lace Logo" />
+                  <span>Lace</span>
+                </div>
+                <span className="text-xl">{'>'}</span>
+              </button>
+            </li>
+            <li>
+              <button className="flex items-center justify-between w-full text-left hover:text-gray-400">
+                <div className="flex items-center space-x-5">
+                  <img className="w-10 ml-3" src="/imgs/yoroi_logo.png" alt="Yoroi Logo" />
+                  <span>Yoroi</span>
+                </div>
+                <span className="text-xl">{'>'}</span>
+              </button>
+            </li>
+            <li>
+              <button className="flex items-center justify-between w-full text-left hover:text-gray-400">
+                <div className="flex items-center space-x-2">
+                  <img className="w-16" src="/imgs/exodus_logo.png" alt="Exodus Logo" />
+                  <span>Exodus</span>
+                </div>
+                <span className="text-xl">{'>'}</span>
+              </button>
+            </li>
           </ul>
         </div>
       )}
