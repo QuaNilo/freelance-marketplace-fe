@@ -166,27 +166,50 @@ const JobsPage = () => {
       <h1 className="text-3xl text-primary font-bold mb-6">Available Services</h1>
 
       {/* Filters */}
-      <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {/* Type */}
         <div>
           <label className="block text-primary font-medium mb-2">Type</label>
-          <div className="flex text-white flex-col gap-2">
-            <label>
+          <div className="flex text-white flex-row gap-4 ml-36">
+            <label className="flex items-center gap-1">
               <input
                 type="checkbox"
                 checked={selectedTypes.includes("service")}
                 onChange={() => handleTypeChange("service")}
-              />{" "}
+              />
               Service
             </label>
-            <label>
+            <label className="flex items-center gap-1">
               <input
                 type="checkbox"
                 checked={selectedTypes.includes("request")}
                 onChange={() => handleTypeChange("request")}
-              />{" "}
+              />
               Request
             </label>
+          </div>
+        </div>
+
+        {/* Date */}
+        <div className="mr-10">
+          <label className="block text-primary font-medium mb-2">Date Range</label>
+          <div className="flex flex-row gap-2">
+            <input
+              type="date"
+              value={dateRange[0]}
+              onChange={(e) =>
+                setDateRange([e.target.value, dateRange[1]])
+              }
+              className="border border-gray-300 rounded px-3 py-2 w-full"
+            />
+            <input
+              type="date"
+              value={dateRange[1]}
+              onChange={(e) =>
+                setDateRange([dateRange[0], e.target.value])
+              }
+              className="border border-gray-300 rounded px-3 py-2 w-full"
+            />
           </div>
         </div>
 
@@ -202,58 +225,35 @@ const JobsPage = () => {
             step={10}
             value={maxPrice}
             onChange={(e) => setMaxPrice(parseInt(e.target.value))}
-            className="w-full"
+            className="w-4/5"
           />
         </div>
 
-        {/* Date */}
-        <div>
-          <label className="block text-primary font-medium mb-2">Date Range</label>
-          <div className="flex flex-col gap-2">
-            <input
-              type="date"
-              value={dateRange[0]}
-              onChange={(e) =>
-                setDateRange([e.target.value, dateRange[1]])
-              }
-              className="border border-gray-300 rounded px-3 py-2"
-            />
-            <input
-              type="date"
-              value={dateRange[1]}
-              onChange={(e) =>
-                setDateRange([dateRange[0], e.target.value])
-              }
-              className="border border-gray-300 rounded px-3 py-2"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Sorter */}
-      <div className="mb-6">
-        <label className="block text-primary font-medium mb-2">Sort By</label>
-        <div className="relative">
-          <select
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            className="appearance-none border border-gray-300 rounded-xl px-4 py-2 w-full bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
-          >
-            <option value="relevance">Relevance (Rating)</option>
-            <option value="lowPrice">Lowest Price</option>
-            <option value="highPrice">Highest Price</option>
-            <option value="recent">Most Recent</option>
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
+        {/* Sorter */}
+        <div className="mb-6">
+          <label className="block text-primary font-medium mb-2">Sort By</label>
+          <div className="relative">
+            <select
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="appearance-none border border-gray-300 rounded-xl px-4 py-2 w-full bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
+              <option value="relevance">Relevance (Rating)</option>
+              <option value="lowPrice">Lowest Price</option>
+              <option value="highPrice">Highest Price</option>
+              <option value="recent">Most Recent</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
