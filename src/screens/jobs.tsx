@@ -126,25 +126,21 @@ const jobs = [
 ];
 
 const JobsPage = () => {
-  const [selectedTypes, setSelectedTypes] = useState(["service", "request"]);
+  const [selectedType, setSelectedType] = useState<"service" | "request">("service");
   const [maxPrice, setMaxPrice] = useState(300);
   const [dateRange, setDateRange] = useState(["2024-01-01", "2025-12-31"]);
   const [sortOption, setSortOption] = useState("relevance");
   const [jobsData, setJobsData] = useState([]);
 
-  const handleTypeChange = (type: string) => {
-    setSelectedTypes((prev) =>
-      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
-    );
-  };
-
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/v1/requests", {
-          params: {
-            deleted: false,
-          },
+        const endpoint = selectedType === "service"
+          ? "http://localhost:8000/api/v1/services"
+          : "http://localhost:8000/api/v1/requests";
+
+        const response = await axios.get(endpoint, {
+          params: { deleted: false },
         });
 
         console.log("Fetched jobs:", response.data);
@@ -155,15 +151,14 @@ const JobsPage = () => {
     };
 
     fetchJobs();
-  }, []);
+  }, [selectedType]);
 
   const filteredJobs = jobs.filter((job) => {
-    const isTypeSelected = selectedTypes.includes(job.type);
     const isPriceInRange = job.price <= maxPrice;
     const isDateInRange =
       job.date >= dateRange[0] && job.date <= dateRange[1];
 
-    return isTypeSelected && isPriceInRange && isDateInRange;
+    return isPriceInRange && isDateInRange;
   });
 
   const sortedJobs = [...filteredJobs].sort((a, b) => {
@@ -192,17 +187,19 @@ const JobsPage = () => {
           <div className="flex text-white flex-row gap-4 ml-36">
             <label className="flex items-center gap-1">
               <input
-                type="checkbox"
-                checked={selectedTypes.includes("service")}
-                onChange={() => handleTypeChange("service")}
+                type="radio"
+                name="jobType"
+                checked={selectedType === "service"}
+                onChange={() => setSelectedType("service")}
               />
               Service
             </label>
             <label className="flex items-center gap-1">
               <input
-                type="checkbox"
-                checked={selectedTypes.includes("request")}
-                onChange={() => handleTypeChange("request")}
+                type="radio"
+                name="jobType"
+                checked={selectedType === "request"}
+                onChange={() => setSelectedType("request")}
               />
               Request
             </label>
