@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 // Simulação com datas e tipos
 const jobs = [
@@ -129,14 +130,32 @@ const JobsPage = () => {
   const [maxPrice, setMaxPrice] = useState(300);
   const [dateRange, setDateRange] = useState(["2024-01-01", "2025-12-31"]);
   const [sortOption, setSortOption] = useState("relevance");
+  const [jobsData, setJobsData] = useState([]);
 
   const handleTypeChange = (type: string) => {
     setSelectedTypes((prev) =>
-      prev.includes(type)
-        ? prev.filter((t) => t !== type)
-        : [...prev, type]
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
     );
   };
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/v1/requests", {
+          params: {
+            deleted: false,
+          },
+        });
+
+        console.log("Fetched jobs:", response.data);
+        setJobsData(response.data);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+
+    fetchJobs();
+  }, []);
 
   const filteredJobs = jobs.filter((job) => {
     const isTypeSelected = selectedTypes.includes(job.type);
