@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {CardanoWallet, useWallet} from "@meshsdk/react";
 import api_service from "../services/api_service";
+import Transaction from "../utils/transaction";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isJobsMenuOpen, setIsJobsMenuOpen] = useState(false);
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
   const [isMessagesMenuOpen, setIsMessagesMenuOpen] = useState(false);
-  const { wallet, connected, disconnect, connecting} = useWallet();
+  const { wallet, disconnect} = useWallet();
 
   const walletMenuRef = useRef<HTMLDivElement | null>(null);
   const walletButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -33,7 +34,7 @@ const Navbar = () => {
         throw new Error("Failed to fetch nonce from server.");
       }
 
-      const data_signature = await signNonce(nonce, userAddress[0])
+      const data_signature = await Transaction.sign_data(wallet, nonce, userAddress[0])
       const signature = data_signature.signature
       const public_key = data_signature.key
       const data = {
@@ -50,10 +51,6 @@ const Navbar = () => {
     finally {
 
     }
-  }
-
-  const signNonce = async (nonce: string, userAddress: string) => {
-    return await wallet.signData(nonce, userAddress)
   }
 
   const closeAllMenus = () => {
