@@ -150,7 +150,7 @@ const JobsPage = () => {
       }
     };
 
-    fetchJobs();
+    // fetchJobs();
   }, [selectedType]);
 
   const filteredJobs = jobs.filter((job) => {
