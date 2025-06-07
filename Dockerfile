@@ -27,7 +27,7 @@ RUN apk update && \
 
 USER nginxuser
 
-EXPOSE 30000
+EXPOSE 45002
 
 CMD ["nginx", "-g", "daemon off;"]
 
